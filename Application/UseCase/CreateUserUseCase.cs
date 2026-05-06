@@ -1,7 +1,6 @@
 using MyApi.Application.DTOs;
 using MyApi.Models;
 using MyApi.Repository;
-using System.Text.Json;
 using BCrypt.Net;
 
 namespace MyApi.Application.UseCases.CreateUser;

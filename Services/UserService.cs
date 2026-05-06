@@ -22,16 +22,6 @@ public class UserService
         return await _userRepo.GetUserById(id);
     }
 
-    public async Task<User> CreateUser(User user)
-    {
-        return await _userRepo.CreateUser(user);
-    }
-
-    public async Task<User> UpdateUser(User user)
-    {
-        return await _userRepo.UpdateUser(user);
-    }
-
     public async Task<bool> DeleteUser(Guid id)
     {
         return await _userRepo.DeleteUser(id);
