@@ -1,4 +1,4 @@
-namespace MyApi.Models;
+namespace MyApi.Application.DTOs;
 public class UpdateUserInput
 {
     public Guid Id { get; set; }

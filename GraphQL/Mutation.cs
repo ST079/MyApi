@@ -1,21 +1,30 @@
 using MyApi.Models;
 using MyApi.Services;
-
+using MyApi.Application.DTOs;
+using MyApi.Application.UseCases.CreateUser;
 namespace MyApi.GraphQL;
 
 public class Mutation
 {
     // Placeholder for future mutations
-    public async Task<User> CreateUser(string name, string email, string password, string phone, string address, [Service] UserService userService)
+    public async Task<User> CreateUser
+    (CreateUserInput createUserInput, [Service] CreateUserUseCase createUserUseCase)
     {
-        User newUser = new User { Id = Guid.NewGuid(), Name = name, Email = email, Password = password, Phone = phone, Address = address };
-        return await userService.CreateUser(newUser);
+        User newUser = new User
+        {
+            Name = createUserInput.Name,
+            Email = createUserInput.Email,
+            Password = createUserInput.Password,
+            Phone = createUserInput.Phone! ,
+            Address = createUserInput.Address!,
+        };
+        return await createUserUseCase.Execute(createUserInput);
     }
 
     public async Task<User> UpdateUser
     (UpdateUserInput input, [Service] UserService userService)
     {
-        User updatedUser = new User { Id = input.Id, Name = input.Name ?? string.Empty, Email = input.Email ?? string.Empty, Phone = input.Phone ?? string.Empty, Address = input.Address ?? string.Empty };
+        User updatedUser = new User { Id = input.Id, Name = input.Name!, Email = input.Email!, Phone = input.Phone!, Address = input.Address! };
         return await userService.UpdateUser(updatedUser);
     }
 

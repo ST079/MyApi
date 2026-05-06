@@ -19,18 +19,9 @@ public class UserRepository : IUserRepository
     //create a new user and save it to the database
     public async Task<User> CreateUser(User user)
     {
-        try
-        {
-            user.Id = Guid.NewGuid();
-            _dbContext.Users.Add(user);
-            await _dbContext.SaveChangesAsync();
-            return user;
-        }
-        catch (Exception ex)
-        {
-            // Handle exceptions (e.g., log the error)
-            throw new Exception("An error occurred while creating the user.", ex);
-        }
+        _dbContext.Users.Add(user);
+        await _dbContext.SaveChangesAsync();
+        return user;
     }
 
 
