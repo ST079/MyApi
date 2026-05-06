@@ -19,6 +19,8 @@ public class UserRepository : IUserRepository
     //create a new user and save it to the database
     public async Task<User> CreateUser(User user)
     {
+        var existingUser = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+        if (existingUser != null) throw new GraphQLException("A user with this email already exists.");
         _dbContext.Users.Add(user);
         await _dbContext.SaveChangesAsync();
         return user;

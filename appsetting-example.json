@@ -1,14 +1,14 @@
 {
   "ConnectionStrings": {
-    "DatabaseUrl": "Host=localhost;Database=veelTest;Username=postgres;Password=admin123"
+    "DatabaseUrl": "Host=yourhost;Database=yourdb;Username=yourusername;Password=yourpassword"
   },
 
   "Jwt": {
-    "Key": "4mrFbA0MDp05",
-    "Issuer": "MyApi",
-    "Audience": "MyApiUsers"
+    "Key": "yoursecretkey",
+    "Issuer": "",
+    "Audience": ""
   },
-
+  
   "Logging": {
     "LogLevel": {
       "Default": "Information",
