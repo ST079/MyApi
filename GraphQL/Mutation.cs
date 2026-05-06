@@ -1,58 +1,26 @@
 using MyApi.Models;
-using MyApi.infrastructure;
+using MyApi.Services;
+
 namespace MyApi.GraphQL;
 
 public class Mutation
 {
     // Placeholder for future mutations
-    public async Task<User> CreateUser(string name, string email, string password, string phone, string address, [Service] AppDbContext dbContext)
+    public async Task<User> CreateUser(string name, string email, string password, string phone, string address, [Service] UserService userService)
     {
-        try
-        {
-            // Implementation for creating a new user
-            User newUser = new User { Id = Guid.NewGuid(), Name = name, Email = email, Password = password, Phone = phone, Address = address };
-            dbContext.Users.Add(newUser);
-            await dbContext.SaveChangesAsync();
-            return newUser;
-        }
-        catch (Exception ex)
-        {
-            // Handle exceptions (e.g., log the error)
-            throw new Exception("An error occurred while creating the user.", ex);
-        }
-
+        User newUser = new User { Id = Guid.NewGuid(), Name = name, Email = email, Password = password, Phone = phone, Address = address };
+        return await userService.CreateUser(newUser);
     }
 
     public async Task<User> UpdateUser
-    (Guid id, string? name, string? email, string? phone, string? address, [Service] AppDbContext dbContext)
+    (UpdateUserInput input, [Service] UserService userService)
     {
-        try
-        {
-            // Implementation for updating an existing user
-            var user = await dbContext.Users.FindAsync(id);
-            if (name != null) user?.Name = name;
-            if (email != null) user?.Email = email;
-            if (phone != null) user?.Phone = phone;
-            if (address != null) user?.Address = address;
-            await dbContext.SaveChangesAsync();
-            return user!;
-        }
-        catch (Exception ex)
-        {
-            // Handle exceptions (e.g., log the error)
-            throw new Exception("An error occurred while updating the user.", ex);
-        }
+        User updatedUser = new User { Id = input.Id, Name = input.Name ?? string.Empty, Email = input.Email ?? string.Empty, Phone = input.Phone ?? string.Empty, Address = input.Address ?? string.Empty };
+        return await userService.UpdateUser(updatedUser);
     }
 
-    public async Task<bool> DeleteUser(Guid id, [Service] AppDbContext dbContext)
+    public async Task<bool> DeleteUser(Guid id, [Service] UserService userService)
     {
-        var user = await dbContext.Users.FindAsync(id);
-
-        if (user == null)
-            throw new GraphQLException("User not found.");
-
-        dbContext.Users.Remove(user);
-        await dbContext.SaveChangesAsync();
-        return true;
+        return await userService.DeleteUser(id);
     }
 }
