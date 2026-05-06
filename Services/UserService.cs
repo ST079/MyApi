@@ -1,8 +1,7 @@
 using MyApi.Models;
-using MyApi.Repository;
+using MyApi.Infrastructure.Repository;
 
 namespace MyApi.Services;
-
 
 public class UserService
 {
@@ -25,5 +24,10 @@ public class UserService
     public async Task<bool> DeleteUser(Guid id)
     {
         return await _userRepo.DeleteUser(id);
+    }
+
+    public async Task<User> GetUserByEmail(string email)
+    {
+        return await _userRepo.GetUserByEmail(email);
     }
 }

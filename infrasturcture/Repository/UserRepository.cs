@@ -1,9 +1,11 @@
 
 using MyApi.Models;
-using MyApi.infrastructure;
+using MyApi.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using MyApi.utils;
 
-namespace MyApi.Repository;
+
+namespace MyApi.Infrastructure.Repository;
 
 public class UserRepository : IUserRepository
 {
@@ -22,10 +24,20 @@ public class UserRepository : IUserRepository
         var existingUser = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
         if (existingUser != null) throw new GraphQLException("A user with this email already exists.");
         _dbContext.Users.Add(user);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.Users.AddAsync(user);
         return user;
     }
 
+
+    public async Task<User> Login(string email, string password)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
+        if (user == null || !BCryptPassword.VerifyPassword(password, user.Password))
+        {
+            throw new GraphQLException("Invalid email or password.");
+        }
+       return user;
+    }
 
     //delete a user by id
     public async Task<bool> DeleteUser(Guid id)
@@ -51,6 +63,19 @@ public class UserRepository : IUserRepository
         catch (Exception ex)
         {
             throw new Exception("An error occurred while fetching the user.", ex);
+        }
+    }
+
+    public async Task<User?> GetUserByEmail(string email)
+    {
+        try
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(user => user.Email == email);
+            return user;
+        }
+        catch (NullReferenceException ex)
+        {
+            throw new Exception("An error occurred while fetching the user by email.", ex);
         }
     }
 

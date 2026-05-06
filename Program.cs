@@ -1,11 +1,13 @@
 using MyApi.GraphQL;
-using MyApi.infrastructure;
+using MyApi.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using MyApi.Repository;
+using MyApi.Infrastructure.Repository;
 using MyApi.Services;
 using MyApi.Application.UseCases.CreateUser;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using MyApi.Application.UseCases.UpdateUser;
+using MyApi.Application.UseCase.Login;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CreateUserUseCase>();
+builder.Services.AddScoped<UpdateUserUseCase>();
+builder.Services.AddScoped<LoginUseCase>();
+builder.Services.AddScoped<JwtService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseUrl")));

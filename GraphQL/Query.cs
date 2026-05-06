@@ -1,6 +1,4 @@
 using MyApi.Models;
-using MyApi.infrastructure;
-using Microsoft.EntityFrameworkCore;
 using MyApi.Services;
 namespace MyApi.GraphQL;
 
@@ -18,4 +16,11 @@ public class Query
     {
         return await userService.GetUserById(id);
     }
+
+    public async Task<User> GetUserByEmail(string email, [Service] UserService userService)
+    {
+        return await userService.GetUserByEmail(email);
+    }
+
+    
 }

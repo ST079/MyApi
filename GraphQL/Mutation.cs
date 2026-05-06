@@ -3,6 +3,8 @@ using MyApi.Services;
 using MyApi.Application.DTOs;
 using MyApi.Application.UseCases.CreateUser;
 using MyApi.Application.UseCases.UpdateUser;
+using MyApi.Application.UseCase.Login;
+using MyApi.Application.DTOs.Responses;
 namespace MyApi.GraphQL;
 
 public class Mutation
@@ -12,6 +14,11 @@ public class Mutation
     (CreateUserInput createUserInput, [Service] CreateUserUseCase createUserUseCase)
     {
         return await createUserUseCase.Execute(createUserInput);
+    }
+
+    public async Task<LoginResponse> Login(LoginInput loginInput, [Service] LoginUseCase loginUseCase)
+    {
+        return await loginUseCase.Execute(loginInput);
     }
 
     public async Task<User> UpdateUser
