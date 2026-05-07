@@ -1,0 +1,19 @@
+{
+  "ConnectionStrings": {
+    "DatabaseUrl": "Host=yourhost;Database=yourdb;Username=yourusername;Password=yourpassword"
+  },
+
+  "Jwt": {
+    "Key": "yoursecretkey",
+    "Issuer": "",
+    "Audience": ""
+  },
+  
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}

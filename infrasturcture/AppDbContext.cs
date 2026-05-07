@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyApi.Models;
 
-namespace MyApi.infrastructure;
+namespace MyApi.Infrastructure;
 
 public class AppDbContext : DbContext
 {
