@@ -5,5 +5,5 @@ namespace MyApi.Infrastructure.UnitOfWork;
 public interface IUnitOfWork
 {
     IUserRepository Users { get; }
-    Task<int> SaveChangesAsync();
+    Task SaveChangesAsync();
 }

@@ -48,7 +48,6 @@ public class UserRepository : IUserRepository
             throw new GraphQLException("User not found.");
 
         _dbContext.Users.Remove(user);
-        await _dbContext.SaveChangesAsync();
         return true;
     }
 
@@ -103,7 +102,6 @@ public class UserRepository : IUserRepository
             if (user.Email != null) findUser?.Email = user.Email;
             if (user.Phone != null) findUser?.Phone = user.Phone;
             if (user.Address != null) findUser?.Address = user.Address;
-            await _dbContext.SaveChangesAsync();
             return findUser!;
         }
         catch (Exception ex)

@@ -5,11 +5,11 @@ using MyApi.Application.UseCases.CreateUser;
 using MyApi.Application.UseCases.UpdateUser;
 using MyApi.Application.UseCase.Login;
 using MyApi.Application.DTOs.Responses;
+using MyApi.Application.UseCases.DeleteUser;
 namespace MyApi.GraphQL;
 
 public class Mutation
 {
-    // Placeholder for future mutations
     public async Task<User> CreateUser
     (CreateUserInput createUserInput, [Service] CreateUserUseCase createUserUseCase)
     {
@@ -28,8 +28,8 @@ public class Mutation
         return await updateUserUseCase.Execute(input.Id, input);
     }
 
-    public async Task<bool> DeleteUser(Guid id, [Service] UserService userService)
+    public async Task<bool> DeleteUser(Guid id, [Service] DeleteUserUseCase deleteUserUseCase)
     {
-        return await userService.DeleteUser(id);
+        return await deleteUserUseCase.Execute(id);
     }
 }

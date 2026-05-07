@@ -8,14 +8,18 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using MyApi.Application.UseCases.UpdateUser;
 using MyApi.Application.UseCase.Login;
+using MyApi.Application.UseCases.DeleteUser;
+using MyApi.Infrastructure.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<CreateUserUseCase>();
 builder.Services.AddScoped<UpdateUserUseCase>();
+builder.Services.AddScoped<DeleteUserUseCase>();
 builder.Services.AddScoped<LoginUseCase>();
 builder.Services.AddScoped<JwtService>();
 

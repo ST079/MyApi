@@ -42,6 +42,7 @@ public class CreateUserUseCase
         };
 
         await _userRepository.CreateUser(user);
+        
         await _unitOfWork.SaveChangesAsync();
         return user;
     }
